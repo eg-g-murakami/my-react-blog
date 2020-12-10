@@ -17,7 +17,6 @@ const App: FC = () => {
   const [page, setPage] = useState({ title: '', body: '', slug: '' });
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     window
       .fetch(
         `https://graphql.contentful.com/content/v1/spaces/${
@@ -37,23 +36,17 @@ const App: FC = () => {
         },
       )
       .then((response) => response.json())
-      .then(({ data, errors }) => {
-        if (errors) {
-          // eslint-disable-next-line no-console
-          console.error(errors);
-        }
-
+      .then(({ data }) => {
         // rerender the entire component with new data
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        setPage(data.postCollection.items[0]);
+        setPage(data?.postCollection?.items[0] ?? null);
+      })
+      .catch((error) => {
+        throw new Error(error);
       });
   }, []);
 
-  if (!page) {
-    return <p>Loading...</p>;
-  }
-
-  return (
+  return page ? (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -70,6 +63,8 @@ const App: FC = () => {
         </a>
       </header>
     </div>
+  ) : (
+    <p>Loading...</p>
   );
 };
 
