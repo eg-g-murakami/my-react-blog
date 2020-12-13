@@ -4,22 +4,41 @@ import logo from './logo.svg';
 import './App.css';
 
 const App: FC = () => {
-  const [page, setPage] = useState<TPost>({ title: '', body: '', slug: '' });
+  const [posts, setPosts] = useState<TPost[]>([
+    { title: '', body: '', slug: '' },
+  ]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     void (async () => {
-      const posts = await getEntries();
-      setPage(posts[0]);
+      setIsLoading(true);
+      const error = [
+        {
+          title: 'Sorry, something went wrong.',
+          body: '',
+          slug: '',
+        },
+      ];
+      try {
+        const fetchedPosts = await getEntries();
+        setPosts(fetchedPosts ?? error);
+      } catch (err) {
+        throw new Error(err);
+      } finally {
+        setIsLoading(false);
+      }
     })();
   }, []);
 
-  return page ? (
+  return isLoading ? (
+    <p>Loading...</p>
+  ) : (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <h1>{page.title}</h1>
-        <p>{page.slug}</p>
-        <p>{page.body}</p>
+        <h1>{posts[0].title}</h1>
+        <p>{posts[0].slug}</p>
+        <p>{posts[0].body}</p>
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -30,8 +49,6 @@ const App: FC = () => {
         </a>
       </header>
     </div>
-  ) : (
-    <p>Loading...</p>
   );
 };
 

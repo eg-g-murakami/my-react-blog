@@ -7,18 +7,16 @@ export type TPost = {
   slug: string;
 };
 
-export const getEntries = async (): Promise<TPost[]> => {
+export const getEntries = async (): Promise<TPost[] | undefined> => {
   const client = clientApi();
-  const error = [{ title: 'Sorry, something went wrong.', body: '', slug: '' }];
 
   const posts = await client
     ?.getEntries<TPost>()
     .then((response: EntryCollection<TPost>) => {
       return response.items.map((item) => item.fields);
-    })
-    .catch(() => error);
+    });
 
-  return posts ?? error;
+  return posts;
 };
 
 export const getEntry = (): string => {
