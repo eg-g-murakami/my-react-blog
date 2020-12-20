@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { Link } from 'react-router-dom';
 import { TPost } from '../../domains/contentful';
 
 interface IProps {
@@ -15,6 +16,9 @@ const HomeView: FC<IProps> = ({ post, isLoading }) => {
       <h1>{post.title}</h1>
       <p>{post.description}</p>
       <ReactMarkdown source={post.body} />
+      <footer>
+        <Link to="/">home</Link>
+      </footer>
     </>
   );
 };
