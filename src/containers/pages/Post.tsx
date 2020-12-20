@@ -4,8 +4,8 @@ import PostView from '../../components/pages/PostView';
 import useFetchPost from '../../hooks/useFetchPost';
 
 const Post: FC = () => {
-  const { postId } = useParams<{ postId: string }>();
-  const [post, isLoading] = useFetchPost(postId);
+  const { slug } = useParams<{ slug: string }>();
+  const [post, isLoading] = useFetchPost(slug);
 
   return <PostView {...{ post, isLoading }} />;
 };

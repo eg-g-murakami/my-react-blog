@@ -14,7 +14,7 @@ const HomeView: FC<IProps> = ({ posts, isLoading }) => {
     <>
       {posts.map((post) => (
         <article key={post.slug}>
-          <Link to={`/post/${post.id}`}>
+          <Link to={`/post/${post.slug}`}>
             <h1>{post.title}</h1>
           </Link>
           <p>{post.description}</p>

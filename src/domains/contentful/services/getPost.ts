@@ -1,21 +1,27 @@
-import { Entry } from 'contentful';
+import { EntryCollection } from 'contentful';
 import clientApi from './client';
 import { TPost } from '../models/post';
 
-const getPost = async (id: string): Promise<TPost | undefined> => {
+const getPost = async (slug: string): Promise<TPost | undefined> => {
   const client = clientApi();
 
   const post = await client
-    ?.getEntry<TPost>(id)
-    .then((response: Entry<TPost>) => {
-      return {
-        ...response.fields,
-        createdAt: response.sys.createdAt,
-        id: response.sys.id,
-      };
+    ?.getEntries<TPost>({
+      content_type: 'post',
+      'fields.slug': slug,
+      limit: 1,
+    })
+    .then((response: EntryCollection<TPost>) => {
+      return response.items.map((item) => {
+        return {
+          ...item.fields,
+          createdAt: item.sys.createdAt,
+          id: item.sys.id,
+        };
+      });
     });
 
-  return post;
+  return post?.[0];
 };
 
 export default getPost;
