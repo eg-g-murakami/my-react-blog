@@ -1,5 +1,12 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  makeStyles,
+  Typography,
+  Card,
+  CardContent,
+  CardActionArea,
+} from '@material-ui/core';
 import { TPost } from '../../domains/contentful';
 
 interface IProps {
@@ -7,20 +14,49 @@ interface IProps {
   isLoading: boolean;
 }
 
+const useStyles = makeStyles({
+  card: {
+    maxWidth: 345,
+    marginBottom: 20,
+  },
+  link: {
+    textDecoration: 'none',
+  },
+});
+
 const HomeView: FC<IProps> = ({ posts, isLoading }) => {
+  const classes = useStyles();
+
   return isLoading ? (
     <p>Loading...</p>
   ) : (
     <>
-      <h1>my awesome blog</h1>
+      <Typography component="h1" variant="h3">
+        my awesome blog
+      </Typography>
       <p>powerd by contentful</p>
       {posts.map((post) => (
-        <article key={post.slug}>
-          <Link to={`/post/${post.slug}`}>
-            <h2>{post.title}</h2>
-          </Link>
-          <p>{post.description}</p>
-        </article>
+        <Card className={classes.card} component="article" key={post.slug}>
+          <CardActionArea>
+            <CardContent>
+              <Link className={classes.link} to={`/post/${post.slug}`}>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {post.title}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="textSecondary"
+                  component="time"
+                >
+                  {post.createdAt}
+                </Typography>
+                <Typography variant="body1" color="textSecondary" component="p">
+                  {post.description}
+                </Typography>
+              </Link>
+            </CardContent>
+          </CardActionArea>
+        </Card>
       ))}
     </>
   );
