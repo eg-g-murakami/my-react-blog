@@ -10,7 +10,7 @@ const App: FC = () => {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route exact path="/post/:postId">
+        <Route exact path="/post/:slug">
           <Post />
         </Route>
         <Route>
