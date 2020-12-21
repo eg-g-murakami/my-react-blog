@@ -12,10 +12,12 @@ const HomeView: FC<IProps> = ({ posts, isLoading }) => {
     <p>Loading...</p>
   ) : (
     <>
+      <h1>my awesome blog</h1>
+      <p>powerd by contentful</p>
       {posts.map((post) => (
         <article key={post.slug}>
           <Link to={`/post/${post.slug}`}>
-            <h1>{post.title}</h1>
+            <h2>{post.title}</h2>
           </Link>
           <p>{post.description}</p>
         </article>
