@@ -11,7 +11,7 @@ const getPosts = async (): Promise<TPost[] | undefined> => {
       return response.items.map((item) => {
         return {
           ...item.fields,
-          createdAt: item.sys.createdAt,
+          createdAt: item.sys.createdAt.substr(0, 10),
           id: item.sys.id,
         };
       });
