@@ -43,14 +43,14 @@ const HomeView: FC<IProps> = ({ posts, isLoading }) => {
       {posts.map((post) => (
         <Card className={classes.card} component="article" key={post.slug}>
           <CardActionArea>
-            {post?.thumbnail?.fields?.file?.url && (
-              <CardMedia
-                image={`https:${post.thumbnail.fields.file.url}`}
-                className={classes.media}
-              />
-            )}
-            <CardContent>
-              <Link className={classes.link} to={`/post/${post.slug}`}>
+            <Link className={classes.link} to={`/post/${post.slug}`}>
+              {post?.thumbnail?.fields?.file?.url && (
+                <CardMedia
+                  image={`https:${post.thumbnail.fields.file.url}`}
+                  className={classes.media}
+                />
+              )}
+              <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                   {post.title}
                 </Typography>
@@ -64,8 +64,8 @@ const HomeView: FC<IProps> = ({ posts, isLoading }) => {
                 <Typography variant="body1" color="textSecondary" component="p">
                   {post.description}
                 </Typography>
-              </Link>
-            </CardContent>
+              </CardContent>
+            </Link>
           </CardActionArea>
         </Card>
       ))}
