@@ -4,6 +4,13 @@ export type TPost = {
   description: string;
   body: string;
   slug: string;
+  thumbnail: {
+    fields: {
+      file: {
+        url: string;
+      };
+    };
+  };
   createdAt: string;
 };
 
