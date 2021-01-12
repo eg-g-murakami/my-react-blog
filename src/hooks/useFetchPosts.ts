@@ -8,6 +8,13 @@ const useFetchPosts = (): [TPost[], boolean] => {
     description: '',
     body: '',
     slug: '',
+    thumbnail: {
+      fields: {
+        file: {
+          url: '',
+        },
+      },
+    },
     createdAt: '',
   };
   const [posts, setPosts] = useState<TPost[]>([initialPost]);
@@ -23,6 +30,13 @@ const useFetchPosts = (): [TPost[], boolean] => {
           description: '',
           body: '',
           slug: '',
+          thumbnail: {
+            fields: {
+              file: {
+                url: '',
+              },
+            },
+          },
           createdAt: '',
         },
       ];
